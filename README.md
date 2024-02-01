@@ -3,11 +3,11 @@ Version 1.1.0-beta
 
 A simple To Do List created with HTML/Javascript/CSS based on the To Do List example from W3Schools:
 
-https://www.w3schools.com/howto/howto_js_todolist.asp
+<a href="https://www.w3schools.com/howto/howto_js_todolist.asp" target="_blank">https://www.w3schools.com/howto/howto_js_todolist.asp</a>
 
 Online Demo: 
 
-https://kendawson.online/list/
+<a href="https://kendawson.online/list/" target="_blank">https://kendawson.online/list/</a>
 
 ## Main Features
 
