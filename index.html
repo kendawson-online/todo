@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="icon" href="assets/list.ico" sizes="any">
+    <link rel="icon" href="assets/list.svg" type="image/svg+xml">
+    <link rel="manifest" href="todo.webmanifest">
+    <!-- external libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">    
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <!-- list styles -->
+    <link rel="stylesheet" href="assets/todo.css">
+</head>
+<body>
+
+  <div class="float-end mt-2 me-2">
+    <button class="btn btn-sm btn btn-transparent btn-outline-success" data-bs-toggle="modal" data-bs-target="#settingsModal" title="Settings" style="font-size: 28px; line-height: 28px;">
+      <i class="bi bi-gear-fill text-light"></i>
+    </button>
+  </div>
+  
+  <header class="header">
+      <h2 id="heading" class="heading"></h2>
+      <div class="input-group mx-auto">
+          <input type="text" id="myInput" placeholder="Type your item here" class="form-control" maxlength="100">
+          <button id="addBtn" type="button" onclick="addItem()" class="btn btn-dark fw-bold">Add Item</button>
+      </div>
+  </header>
+  
+  <section>
+      <p id="errmsg"></p>
+  </section>
+  
+  <noscript>
+    <h3 class="text-center text-danger m-5">Javascript is required to use this app!</h3>
+  </noscript>
+  
+  <main class="mb-4">
+     <ul id="myList" class="mylist list-group mx-auto"></ul> 
+  </main>
+  
+  <!-- edit item modal -->
+  <div class="modal fade" id="editModal" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title text-success fs-5" id="editModalLabel">Edit List Item</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <textarea class="form-control" id="message-text" maxlength="100"></textarea>
+              </div>
+              <button type="button" id="saveBtn" class="btn btn-outline-success float-end" data-bs-dismiss="modal">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+  
+  <!-- settings modal -->
+  <div class="modal fade" id="settingsModal" aria-hidden="true" aria-labelledby="settingsModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-4 fw-bold" id="settingsModalLabel">Backup / Restore</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Click the Export Data button to backup your data to an external file. If you already have a backup data file, click the Import Data button to restore your saved list.
+        </div>
+        <div class="modal-footer mb-4">
+            <div class="container-fluid text-center">
+              <button class="btn btn-lg btn-success mb-2" data-bs-target="#exportDataModal" data-bs-toggle="modal">
+                <i class="bi bi-box-arrow-in-left"></i> Export List Data
+              </button>
+              <button class="btn btn-lg btn-primary mb-2" data-bs-target="#importDataModal" data-bs-toggle="modal">
+                <i class="bi bi-box-arrow-in-right"></i> Import List Data
+              </button>
+            </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- export data modal -->
+  <div class="modal fade" id="exportDataModal" aria-hidden="true" aria-labelledby="exportDataLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title text-success fs-5" id="exportDataLabel">Export List Data</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid text-center mb-4">
+            <button class="btn btn-lg btn-success mb-2" class="btn-close" data-bs-dismiss="modal" onclick="backupListData()">
+              <i class="bi bi-box-arrow-down"></i> Download List Data
+            </button>
+            <button class="btn btn-lg btn-danger mb-2" data-bs-target="#settingsModal" data-bs-toggle="modal">
+              Cancel
+            </button>
+          </div>    
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- import data modal -->
+  <div class="modal fade" id="importDataModal" aria-hidden="true" aria-labelledby="importDataLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title text-primary fs-5" id="importDataLabel">Import List Data</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="backupFile" class="form-label text-primary">Select an existing backup file</label>
+                <input id="backupFile" type="file" accept=".json" class="form-control border border-1 border-primary">
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div class="container-fluid text-center mb-4">
+                <button class="btn btn-lg btn-primary mb-2" class="btn-close" data-bs-dismiss="modal" onclick="importListData()">
+                  <i class="bi bi-box-arrow-in-right"></i> Import List Data
+                </button>
+                <button class="btn btn-lg btn-danger mb-2" data-bs-target="#settingsModal" data-bs-toggle="modal">
+                  Cancel
+                </button>
+            </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- success modal -->
+  <div class="modal fade" id="successModal" aria-hidden="true" aria-labelledby="successModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title text-success fs-5" id="successModalLabel">Operation Completed Successfully</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center text-success display-1 fw-bold" title="Success!">
+            <i class="bi bi-hand-thumbs-up"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- error modal -->
+  <div class="modal fade" id="errorModal" aria-hidden="true" aria-labelledby="errorModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title text-danger fs-5" id="errorModalLabel">There Was A Problem!</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center text-danger display-1 fw-bold" title="Stop!">
+            <i class="bi bi-sign-stop"></i>
+          </div>
+          <p class="text-start text-danger mt-2">Something went wrong while processing your data. Please close this window, reload, and try again.</p>
+        </div>
+        <div class="modal-footer">
+          <div class="container-fluid text-center">
+              <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
+          </div>  
+      </div>      
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/todo.js"></script>
+
+  <script>
+    // create a config object
+    const conf = {
+      "key": "my_todo",                 // key name used in local storage
+      "locale": "en-US",                // two letter language-country code (for local date formatting)
+      "listname": "Personal To Do List" // name of the list
+    };
+    // call the showList() function
+    showList(conf);
+  </script>
+
+</body>
+</html>
