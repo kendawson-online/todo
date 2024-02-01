@@ -6,7 +6,6 @@
 // variables
 var i;
 var myItems;
-var draggedItem = null;
 var date = new Date();
 var lastTap = 0;                // tap timer:
 var timeDelay = 300;            // used to detect double-taps on touch screens
@@ -39,7 +38,7 @@ const params = Object.fromEntries(urlSearchParams.entries());
 // accepts 1 optional argument: config object
 // which contains: "key", "locale", and "listname" values
 function showList(cobj=null) {
-  // if a config data is passed, use those values
+  // if a config object is passed, use those values instead of defaults
   if (cobj) {
     if (cobj.key) { key = cobj.key; }
     if (cobj.locale) { locale = cobj.locale; }
