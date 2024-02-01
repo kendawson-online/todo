@@ -156,16 +156,12 @@ function addItem() {
     alert("You didn't type anything!");
     input.focus();
     return false;
-  } 
-  // otherwise,
-  else {
-    // write value to local storage
+  } else {
+    // otherwise, write value to local storage
     saveData(inputValue);
     // and reload the page
     location.reload();
   }
-  // clear the form
-  input.value = "";
 }
 
 // save item to local storage
