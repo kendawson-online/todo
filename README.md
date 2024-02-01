@@ -17,7 +17,7 @@ Online Demo:
 * Local version of app (including libraries) is under 1.75 MB
 * Uses Bootstrap 5.3.2 for styling
 * Uses Bootstrap Icons
-* Uses SortableJS for drag-and-drop funcionality
+* Uses SortableJS for drag-and-drop functionality
 * Mobile-friendly (works on small screens)
 * Dates can be displayed in localized format (locale)
 * URL parameters (e.g. /?foo=bar) are supported (but not currently used)
