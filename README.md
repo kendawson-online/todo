@@ -1,5 +1,5 @@
 # To Do List 
-Version 1.1.0-beta 
+Version 1.1.1-beta 
 
 A simple To Do List created with HTML/Javascript/CSS based on the To Do List example from W3Schools:
 

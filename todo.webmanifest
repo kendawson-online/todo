@@ -1,10 +1,11 @@
 {
-  "name": "To Do List",
+  "name": "To-Do List",
   "short_name": "To-Do",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fff",
-  "description": "A Simple To Do List App.",
+  "background_color": "#FFFFFF",
+  "theme_color": "#198754",
+  "description": "A Simple To-Do List App.",
   "icons": [
     {
       "src": "assets/icon-48.png",
