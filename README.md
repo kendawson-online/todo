@@ -7,7 +7,7 @@ A simple To Do List created with HTML/Javascript/CSS based on the To Do List exa
 
 Online Demo: 
 
-<a href="https://kendawson.online/list/" target="_blank">https://kendawson.online/list/</a>
+<a href="https://kendawson.online/free/todolist/" target="_blank">https://kendawson.online/free/todolist/</a>
 
 ## Main Features
 
